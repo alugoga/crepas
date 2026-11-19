@@ -3,32 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#172b27">
-<title>CrepaLab | Taller de costeo</title>
+<meta name="theme-color" content="#102a43">
+<link rel="icon" type="image/png" href="./flaticon.png">
+<title>Noviembre Azul ISSEG 2026 | Crepas </title>
 <style>
-:root{--ink:#172b27;--muted:#687873;--cream:#f7f5ef;--paper:#fff;--line:#e4e8e2;--green:#285b49;--lime:#d9edb9;--orange:#f2a65a;--red:#a94438;--shadow:0 12px 35px #172b2710}
+:root{--ink:#102a43;--muted:#62748a;--cream:#f3f7fc;--paper:#fff;--line:#dce6f1;--green:#2563eb;--lime:#bfdbfe;--orange:#f4b860;--red:#b54747;--shadow:0 12px 35px #102a4310}
 *{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--ink);font:15px/1.5 Inter,system-ui,-apple-system,Segoe UI,sans-serif}
 header{background:var(--ink);color:white;padding:26px max(20px,calc((100% - 1120px)/2));display:flex;justify-content:space-between;align-items:center;gap:20px}
-.brand{font-weight:900;letter-spacing:.12em;font-size:13px;color:var(--lime)}header h1{font-size:clamp(25px,4vw,38px);line-height:1.08;margin:8px 0}header p{color:#c7d3cc;margin:0;max-width:650px}.tag{border:1px solid #ffffff40;padding:8px 12px;border-radius:99px;font-size:12px;white-space:nowrap}
+.brand{font-weight:900;letter-spacing:.12em;font-size:13px;color:var(--lime)}header h1{font-size:clamp(25px,4vw,38px);line-height:1.08;margin:8px 0}header p{color:#d5e3f2;margin:0;max-width:650px}.tag{border:1px solid #ffffff40;padding:8px 12px;border-radius:99px;font-size:12px;white-space:nowrap}
 main{max-width:1120px;margin:28px auto;padding:0 18px 60px}.intro{display:flex;justify-content:space-between;gap:16px;align-items:end;margin-bottom:20px}.intro h2{margin:0;font-size:23px}.intro p{margin:4px 0 0;color:var(--muted)}
 .tabs{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.tab{border:1px solid var(--line);background:white;color:var(--muted);padding:10px 15px;border-radius:12px;font-weight:700;cursor:pointer}.tab.active{background:var(--green);border-color:var(--green);color:white}
-.panel{display:none}.panel.active{display:block}.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}.card{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:19px;box-shadow:var(--shadow);grid-column:span 6}.card.full{grid-column:span 12}.card.third{grid-column:span 4}.card h3{margin:0 0 4px;font-size:17px}.sub{color:var(--muted);font-size:13px;margin:0 0 16px}.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.field label{display:block;color:var(--muted);font-size:12px;font-weight:700;margin-bottom:5px}.field input{width:100%;border:1px solid #dce2dc;border-radius:10px;padding:11px 10px;font:inherit;color:var(--ink);background:#fff}.field input:focus{outline:2px solid #9ac6a7;border-color:var(--green)}.field small{display:block;color:#89948e;font-size:11px;margin-top:3px}
+.panel{display:none}.panel.active{display:block}.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}.card{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:19px;box-shadow:var(--shadow);grid-column:span 6}.card.full{grid-column:span 12}.card.third{grid-column:span 4}.card h3{margin:0 0 4px;font-size:17px}.sub{color:var(--muted);font-size:13px;margin:0 0 16px}.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.field label{display:block;color:var(--muted);font-size:12px;font-weight:700;margin-bottom:5px}.field input{width:100%;border:1px solid #dce2dc;border-radius:10px;padding:11px 10px;font:inherit;color:var(--ink);background:#fff}.field input:focus{outline:2px solid #93c5fd;border-color:var(--green)}.field small{display:block;color:#89948e;font-size:11px;margin-top:3px}
 table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:10px 7px;border-bottom:1px solid var(--line)}th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}td:last-child,th:last-child{text-align:right}.money{font-variant-numeric:tabular-nums;font-weight:700}.totalrow td{font-weight:900;border-bottom:0;padding-top:14px}
-.counter-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.team{background:#f7f9f5;border:1px solid var(--line);border-radius:14px;padding:13px}.team strong{display:block;font-size:13px}.count{font-size:30px;font-weight:900;margin:8px 0}.counter-actions{display:flex;gap:6px}.counter-actions button{flex:1;border:0;border-radius:9px;padding:8px;background:var(--green);color:white;font-weight:800;cursor:pointer}.counter-actions button.minus{background:#e9eee9;color:var(--ink)}
-.big-total{display:flex;justify-content:space-between;align-items:center;background:var(--ink);color:white;padding:17px 20px;border-radius:15px;margin-top:13px}.big-total span{color:#c7d3cc}.big-total strong{font-size:32px}
-.metric{background:#f4f8f1;border-radius:14px;padding:15px}.metric span{display:block;color:var(--muted);font-size:12px}.metric strong{font-size:25px;display:block;margin-top:3px}
-.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}.btn{border:0;border-radius:11px;padding:11px 15px;font:inherit;font-weight:800;cursor:pointer;background:var(--green);color:white}.btn.secondary{background:#e8eee8;color:var(--ink)}.btn.warn{background:#fff0e9;color:var(--red)}
-.note{background:#fff8e9;border:1px solid #f0dfbd;padding:12px 14px;border-radius:12px;color:#725b36;font-size:13px;margin-top:13px}
-.result-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}.result-grid .metric:nth-child(2){background:#edf4e9}.result-grid .metric:nth-child(3){background:#fff2e6}
+.counter-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.team{background:#f1f6fd;border:1px solid var(--line);border-radius:14px;padding:13px}.team strong{display:block;font-size:13px}.count{font-size:30px;font-weight:900;margin:8px 0}.counter-actions{display:flex;gap:6px}.counter-actions button{flex:1;border:0;border-radius:9px;padding:8px;background:var(--green);color:white;font-weight:800;cursor:pointer}.counter-actions button.minus{background:#e5eef9;color:var(--ink)}
+.big-total{display:flex;justify-content:space-between;align-items:center;background:var(--ink);color:white;padding:17px 20px;border-radius:15px;margin-top:13px}.big-total span{color:#d5e3f2}.big-total strong{font-size:32px}
+.metric{background:#edf4ff;border-radius:14px;padding:15px}.metric span{display:block;color:var(--muted);font-size:12px}.metric strong{font-size:25px;display:block;margin-top:3px}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}.btn{border:0;border-radius:11px;padding:11px 15px;font:inherit;font-weight:800;cursor:pointer;background:var(--green);color:white}.btn.secondary{background:#e7effa;color:var(--ink)}.btn.warn{background:#fff0e9;color:var(--red)}
+.note{background:#eff6ff;border:1px solid #c9ddf7;padding:12px 14px;border-radius:12px;color:#315477;font-size:13px;margin-top:13px}
+.result-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}.result-grid .metric:nth-child(2){background:#e8f1ff}.result-grid .metric:nth-child(3){background:#eef5fc}
 footer{text-align:center;color:#8a958e;font-size:12px;margin-top:30px}
 @media(max-width:760px){header{align-items:flex-start;flex-direction:column}.card,.card.third{grid-column:span 12}.counter-grid{grid-template-columns:repeat(2,1fr)}.result-grid{grid-template-columns:1fr}.intro{display:block}.fields{gap:10px}}
 @media(max-width:390px){.fields{grid-template-columns:1fr}.counter-grid{grid-template-columns:1fr 1fr}}
+.hero-brand{display:flex;align-items:center;gap:17px}.brand-icon{width:66px;height:66px;object-fit:contain;background:#fff;border-radius:18px;padding:7px;box-shadow:0 5px 18px #0002;flex:none}@media(max-width:760px){.hero-brand{align-items:flex-start}.brand-icon{width:54px;height:54px;border-radius:14px}}
 </style>
 </head>
 <body>
 <header>
- <div><div class="brand">CREPALAB · TALLER PRÁCTICO</div><h1>De la receta al costo real.</h1><p>Produce, registra y descubre cuánto cuesta realmente cada tortilla y cada crepa terminada.</p></div>
- <div class="tag">20 participantes · 4 equipos · 60 minutos</div>
+ <div class="hero-brand"><img class="brand-icon" src="./flaticon.png" alt="Icono de una crepa"><div><div class="brand">NOVIEMBRE AZUL ISSEG 2026 - QUE NO CREPA DUDA</div><h1>Viabilidad, costeo y elaboración de crepas.</h1><p>Produce, registra y descubre cuánto cuesta realmente cada tortilla y cada crepa terminada.</p></div></div>
+ <div class="tag">15 participantes · 4 equipos · 60 minutos · CICADE</div>
 </header>
 <main>
  <div class="intro"><div><h2>Tablero de producción y costos</h2><p>Los importes se expresan en pesos mexicanos (MXN).</p></div><div class="tag" style="color:var(--green);border-color:#cbd9cd">Los cambios se guardan en este dispositivo</div></div>
@@ -54,7 +56,7 @@ footer{text-align:center;color:#8a958e;font-size:12px;margin-top:30px}
    <article class="card">
     <h3>Mantequilla</h3><p class="sub">Ingrediente aportado por los asistentes. Introduce el costo de la cantidad utilizada en toda la producción.</p>
     <div class="field"><label for="butterCost">Costo total de mantequilla utilizada ($)</label><input id="butterCost" type="number" min="0" step=".01" value="0"></div>
-    <p class="sub" style="margin-top:9px">Si no conoces el costo exacto, estima cuánto costó la porción consumida, no el paquete completo.</p>
+    <p class="sub" style="margin-top:9px">Contempla el precio que pagaste por la barra, y si no se usaron el total de barras, es necesario estimar el proporcional, es decir, si el equipo es de 4 personas y cada barra costó $20.00, pero únicamnente se usaron 2.5 barras, introduce $50.00 (2.5 x 20)</p>
    </article>
    <article class="card full">
     <h3>Consumo de energía eléctrica</h3><p class="sub">Estimación por potencia × tiempo. Ajusta los valores a los equipos reales y a tu recibo de luz.</p>
@@ -68,9 +70,9 @@ footer{text-align:center;color:#8a958e;font-size:12px;margin-top:30px}
     </div>
     <div class="fields" style="margin-top:14px">
      <div class="metric"><span>Consumo estimado</span><strong id="kwh">0.000 kWh</strong></div>
-     <div class="metric"><span>Costo eléctrico estimado</span><strong id="energyCost">$0.00</strong></div>
+     <div class="metric"><span>Costo eléctrico estimado</span><strong id="energyCost">$1.14</strong></div>
     </div>
-    <p class="note">Es una estimación por potencia nominal. En la práctica, los termostatos pueden hacer que la resistencia no consuma su potencia máxima durante todo el periodo. El costo real también depende de la tarifa y del esquema de facturación.</p>
+    <p class="note">Con corte a noviembre 2026, la tarifa de la CFE es de 1.144 kWh. Para una tarifa de consumo doméstico básico.</p>
    </article>
   </div>
  </section>
