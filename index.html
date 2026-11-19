@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#172b27">
+<title>CrepaLab | Taller de costeo</title>
+<style>
+:root{--ink:#172b27;--muted:#687873;--cream:#f7f5ef;--paper:#fff;--line:#e4e8e2;--green:#285b49;--lime:#d9edb9;--orange:#f2a65a;--red:#a94438;--shadow:0 12px 35px #172b2710}
+*{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--ink);font:15px/1.5 Inter,system-ui,-apple-system,Segoe UI,sans-serif}
+header{background:var(--ink);color:white;padding:26px max(20px,calc((100% - 1120px)/2));display:flex;justify-content:space-between;align-items:center;gap:20px}
+.brand{font-weight:900;letter-spacing:.12em;font-size:13px;color:var(--lime)}header h1{font-size:clamp(25px,4vw,38px);line-height:1.08;margin:8px 0}header p{color:#c7d3cc;margin:0;max-width:650px}.tag{border:1px solid #ffffff40;padding:8px 12px;border-radius:99px;font-size:12px;white-space:nowrap}
+main{max-width:1120px;margin:28px auto;padding:0 18px 60px}.intro{display:flex;justify-content:space-between;gap:16px;align-items:end;margin-bottom:20px}.intro h2{margin:0;font-size:23px}.intro p{margin:4px 0 0;color:var(--muted)}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.tab{border:1px solid var(--line);background:white;color:var(--muted);padding:10px 15px;border-radius:12px;font-weight:700;cursor:pointer}.tab.active{background:var(--green);border-color:var(--green);color:white}
+.panel{display:none}.panel.active{display:block}.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}.card{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:19px;box-shadow:var(--shadow);grid-column:span 6}.card.full{grid-column:span 12}.card.third{grid-column:span 4}.card h3{margin:0 0 4px;font-size:17px}.sub{color:var(--muted);font-size:13px;margin:0 0 16px}.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.field label{display:block;color:var(--muted);font-size:12px;font-weight:700;margin-bottom:5px}.field input{width:100%;border:1px solid #dce2dc;border-radius:10px;padding:11px 10px;font:inherit;color:var(--ink);background:#fff}.field input:focus{outline:2px solid #9ac6a7;border-color:var(--green)}.field small{display:block;color:#89948e;font-size:11px;margin-top:3px}
+table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:10px 7px;border-bottom:1px solid var(--line)}th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}td:last-child,th:last-child{text-align:right}.money{font-variant-numeric:tabular-nums;font-weight:700}.totalrow td{font-weight:900;border-bottom:0;padding-top:14px}
+.counter-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.team{background:#f7f9f5;border:1px solid var(--line);border-radius:14px;padding:13px}.team strong{display:block;font-size:13px}.count{font-size:30px;font-weight:900;margin:8px 0}.counter-actions{display:flex;gap:6px}.counter-actions button{flex:1;border:0;border-radius:9px;padding:8px;background:var(--green);color:white;font-weight:800;cursor:pointer}.counter-actions button.minus{background:#e9eee9;color:var(--ink)}
+.big-total{display:flex;justify-content:space-between;align-items:center;background:var(--ink);color:white;padding:17px 20px;border-radius:15px;margin-top:13px}.big-total span{color:#c7d3cc}.big-total strong{font-size:32px}
+.metric{background:#f4f8f1;border-radius:14px;padding:15px}.metric span{display:block;color:var(--muted);font-size:12px}.metric strong{font-size:25px;display:block;margin-top:3px}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}.btn{border:0;border-radius:11px;padding:11px 15px;font:inherit;font-weight:800;cursor:pointer;background:var(--green);color:white}.btn.secondary{background:#e8eee8;color:var(--ink)}.btn.warn{background:#fff0e9;color:var(--red)}
+.note{background:#fff8e9;border:1px solid #f0dfbd;padding:12px 14px;border-radius:12px;color:#725b36;font-size:13px;margin-top:13px}
+.result-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}.result-grid .metric:nth-child(2){background:#edf4e9}.result-grid .metric:nth-child(3){background:#fff2e6}
+footer{text-align:center;color:#8a958e;font-size:12px;margin-top:30px}
+@media(max-width:760px){header{align-items:flex-start;flex-direction:column}.card,.card.third{grid-column:span 12}.counter-grid{grid-template-columns:repeat(2,1fr)}.result-grid{grid-template-columns:1fr}.intro{display:block}.fields{gap:10px}}
+@media(max-width:390px){.fields{grid-template-columns:1fr}.counter-grid{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<header>
+ <div><div class="brand">CREPALAB · TALLER PRÁCTICO</div><h1>De la receta al costo real.</h1><p>Produce, registra y descubre cuánto cuesta realmente cada tortilla y cada crepa terminada.</p></div>
+ <div class="tag">20 participantes · 4 equipos · 60 minutos</div>
+</header>
+<main>
+ <div class="intro"><div><h2>Tablero de producción y costos</h2><p>Los importes se expresan en pesos mexicanos (MXN).</p></div><div class="tag" style="color:var(--green);border-color:#cbd9cd">Los cambios se guardan en este dispositivo</div></div>
+ <nav class="tabs">
+  <button class="tab active" data-tab="produccion">01 · Producción</button>
+  <button class="tab" data-tab="producto">02 · Producto final</button>
+  <button class="tab" data-tab="resultados">03 · Resultados</button>
+ </nav>
+
+ <section id="produccion" class="panel active">
+  <div class="grid">
+   <article class="card full">
+    <h3>Contador de tortillas</h3><p class="sub">Cada equipo registra las tortillas que termina. El total se consolida automáticamente.</p>
+    <div class="counter-grid" id="teams"></div>
+    <div class="big-total"><span>Total de tortillas producidas</span><strong id="totalTortillas">0</strong></div>
+    <div class="actions"><button class="btn secondary" id="manualAdd">+ Agregar tortilla al total</button><button class="btn warn" id="resetCounts">Reiniciar conteo</button></div>
+    <p class="note">Sugerencia: asigna a una persona por equipo para llevar el conteo. Registra únicamente tortillas terminadas y aprovechables; anota aparte las piezas defectuosas o desperdiciadas.</p>
+   </article>
+   <article class="card">
+    <h3>Insumos de la mezcla</h3><p class="sub">Costos precargados según la receta proporcionada. Puedes editarlos.</p>
+    <table><thead><tr><th>Insumo / base de cálculo</th><th>Costo del lote</th></tr></thead><tbody id="baseRows"></tbody><tfoot><tr class="totalrow"><td>Subtotal de mezcla</td><td class="money" id="baseTotal">$0.00</td></tr></tfoot></table>
+   </article>
+   <article class="card">
+    <h3>Mantequilla</h3><p class="sub">Ingrediente aportado por los asistentes. Introduce el costo de la cantidad utilizada en toda la producción.</p>
+    <div class="field"><label for="butterCost">Costo total de mantequilla utilizada ($)</label><input id="butterCost" type="number" min="0" step=".01" value="0"></div>
+    <p class="sub" style="margin-top:9px">Si no conoces el costo exacto, estima cuánto costó la porción consumida, no el paquete completo.</p>
+   </article>
+   <article class="card full">
+    <h3>Consumo de energía eléctrica</h3><p class="sub">Estimación por potencia × tiempo. Ajusta los valores a los equipos reales y a tu recibo de luz.</p>
+    <div class="fields">
+     <div class="field"><label>Número de creperas</label><input id="crepeQty" type="number" min="0" step="1" value="4"></div>
+     <div class="field"><label>Potencia por crepera (W)</label><input id="crepeW" type="number" min="0" value="1000"></div>
+     <div class="field"><label>Tiempo de uso (minutos)</label><input id="crepeMin" type="number" min="0" value="45"></div>
+     <div class="field"><label>Potencia de licuadora (W)</label><input id="blenderW" type="number" min="0" value="500"></div>
+     <div class="field"><label>Tiempo de licuadora (minutos)</label><input id="blenderMin" type="number" min="0" value="15"></div>
+     <div class="field"><label>Tarifa eléctrica ($/kWh)</label><input id="rate" type="number" min="0" step=".01" value="3.50"><small>Valor ilustrativo; reemplázalo por tu tarifa efectiva.</small></div>
+    </div>
+    <div class="fields" style="margin-top:14px">
+     <div class="metric"><span>Consumo estimado</span><strong id="kwh">0.000 kWh</strong></div>
+     <div class="metric"><span>Costo eléctrico estimado</span><strong id="energyCost">$0.00</strong></div>
+    </div>
+    <p class="note">Es una estimación por potencia nominal. En la práctica, los termostatos pueden hacer que la resistencia no consuma su potencia máxima durante todo el periodo. El costo real también depende de la tarifa y del esquema de facturación.</p>
+   </article>
+  </div>
+ </section>
+
+ <section id="producto" class="panel">
+  <div class="grid">
+   <article class="card">
+    <h3>Ingredientes del topping</h3><p class="sub">Precios de compra precargados. Ingresa cuánto se utilizó en total para los productos terminados.</p>
+    <table><thead><tr><th>Insumo</th><th>Costo utilizado ($)</th></tr></thead><tbody>
+     <tr><td>Queso Philadelphia<br><small>200 g · $190/kg</small></td><td><input class="field-input" id="philCost" type="number" min="0" step=".01" value="38"></td></tr>
+     <tr><td>Mermelada<br><small>220 g · $50/kg</small></td><td><input class="field-input" id="jamCost" type="number" min="0" step=".01" value="11"></td></tr>
+     <tr><td>Fresas<br><small>Introduce el costo de la cantidad utilizada</small></td><td><input class="field-input" id="strawCost" type="number" min="0" step=".01" value="0"></td></tr>
+    </tbody></table>
+    <p class="sub" style="margin-top:10px">Los valores de Philadelphia y mermelada corresponden al lote completo indicado. Si sobra producto, registra solo la cantidad realmente consumida para las crepas vendibles.</p>
+   </article>
+   <article class="card">
+    <h3>Empaque y materiales auxiliares</h3><p class="sub">Registra el costo total consumido durante la producción final.</p>
+    <div class="fields">
+     <div class="field"><label>Desechables / platos ($)</label><input id="plateCost" type="number" min="0" step=".01" value="0"></div>
+     <div class="field"><label>Bolsas / empaques ($)</label><input id="packCost" type="number" min="0" step=".01" value="0"></div>
+     <div class="field"><label>Guantes utilizados ($)</label><input id="gloveCost" type="number" min="0" step=".01" value="15.60"></div>
+     <div class="field"><label>Otros materiales ($)</label><input id="otherCost" type="number" min="0" step=".01" value="0"></div>
+    </div>
+    <p class="note">Los 10 guantes precargados equivalen a $15.60 (10 × $1.56). Si se utilizan más o menos, modifica el importe para reflejar el consumo real.</p>
+   </article>
+   <article class="card full">
+    <h3>¿Cuántas crepas terminadas se elaboraron?</h3><p class="sub">No todas las tortillas necesariamente se convierten en productos finales. Este dato permite repartir toppings y empaque entre las unidades terminadas.</p>
+    <div class="fields">
+     <div class="field"><label>Productos finales elaborados</label><input id="finishedQty" type="number" min="0" step="1" value="0"></div>
+     <div class="field"><label>Precio de venta por producto ($)</label><input id="salePrice" type="number" min="0" step=".01" value="0"></div>
+    </div>
+   </article>
+  </div>
+ </section>
+
+ <section id="resultados" class="panel">
+  <div class="result-grid">
+   <div class="metric"><span>Costo por tortilla</span><strong id="unitTortilla">$0.00</strong></div>
+   <div class="metric"><span>Costo por crepa terminada</span><strong id="unitProduct">$0.00</strong></div>
+   <div class="metric"><span>Precio de venta capturado</span><strong id="saleDisplay">$0.00</strong></div>
+  </div>
+  <div class="grid">
+   <article class="card">
+    <h3>Desglose de la tortilla</h3><p class="sub">Costo del lote distribuido entre las tortillas producidas.</p>
+    <table><tbody id="tortillaBreakdown"></tbody></table>
+   </article>
+   <article class="card">
+    <h3>Desglose del producto final</h3><p class="sub">Costo de una crepa terminada, incluyendo toppings y empaque.</p>
+    <table><tbody id="productBreakdown"></tbody></table>
+   </article>
+   <article class="card full">
+    <h3>Lectura del resultado</h3>
+    <div class="fields">
+     <div class="metric"><span>Utilidad bruta por producto</span><strong id="profit">$0.00</strong></div>
+     <div class="metric"><span>Margen sobre precio de venta</span><strong id="margin">—</strong></div>
+    </div>
+    <p class="note">La utilidad y el margen aquí son preliminares: todavía no incluyen mano de obra, renta, depreciación de equipos, comisiones, impuestos ni otros gastos generales. No confundas margen con porcentaje de aumento sobre el costo (markup).</p>
+   </article>
+  </div>
+  <div class="actions"><button class="btn" id="exportCsv">Descargar reporte CSV</button><button class="btn secondary" id="print">Imprimir resultados</button></div>
+ </section>
+ <footer>CREPALAB · Herramienta didáctica de costeo · Los datos se guardan localmente en este navegador.</footer>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const money=n=>new Intl.NumberFormat('es-MX',{style:'currency',currency:'MXN'}).format(Number.isFinite(n)?n:0);
+const num=id=>Math.max(0,Number($(id).value)||0);
+const baseItems=[
+ {name:'Harina · 750 g a $18/kg',id:'flour',value:13.50},
+ {name:'Azúcar · 200 g a $12/kg',id:'sugar',value:2.40},
+ {name:'Bolsas de mezcla · 5 g a $20/kg',id:'bags',value:.10},
+ {name:'Leche · 900 ml',id:'milk',value:22},
+ {name:'Huevos · 2 piezas',id:'eggs',value:4}
+];
+let counts=[0,0,0,0],manual=0;
+function renderTeams(){
+ $('teams').innerHTML=counts.map((v,i)=>`<div class="team"><strong>Equipo ${i+1}</strong><div class="count">${v}</div><div class="counter-actions"><button class="minus" data-i="${i}" data-d="-1">−</button><button data-i="${i}" data-d="1">+</button></div></div>`).join('');
+ $('teams').querySelectorAll('button').forEach(b=>b.onclick=()=>{let i=+b.dataset.i;counts[i]=Math.max(0,counts[i]+Number(b.dataset.d));save();renderTeams();calc()});
+ $('totalTortillas').textContent=counts.reduce((a,b)=>a+b,0)+manual;
+}
+function renderBase(){
+ $('baseRows').innerHTML=baseItems.map(x=>`<tr><td>${x.name}</td><td><input class="base-input" data-id="${x.id}" type="number" min="0" step=".01" value="${x.value.toFixed(2)}"></td></tr>`).join('');
+ $('baseRows').querySelectorAll('input').forEach(i=>i.addEventListener('input',()=>{save();calc()}));
+}
+function energy(){
+ const crepe=num('crepeQty')*num('crepeW')/1000*num('crepeMin')/60;
+ const blender=num('blenderW')/1000*num('blenderMin')/60;
+ const kwh=crepe+blender;return {kwh,cost:kwh*num('rate')};
+}
+function baseTotal(){return [...$('baseRows').querySelectorAll('input')].reduce((s,i)=>s+Math.max(0,Number(i.value)||0),0)}
+function totalTortillas(){return counts.reduce((a,b)=>a+b,0)+manual}
+function calc(){
+ const qty=totalTortillas(),base=baseTotal(),e=energy(),butter=num('butterCost');
+ $('totalTortillas').textContent=qty;$('baseTotal').textContent=money(base);
+ $('kwh').textContent=e.kwh.toFixed(3)+' kWh';$('energyCost').textContent=money(e.cost);
+ const tortillaBatch=base+butter+e.cost,unit=qty?tortillaBatch/qty:0;
+ const finished=num('finishedQty');
+ const toppings=num('philCost')+num('jamCost')+num('strawCost');
+ const packaging=num('plateCost')+num('packCost')+num('gloveCost')+num('otherCost');
+ const toppingUnit=finished?toppings/finished:0,packUnit=finished?packaging/finished:0;
+ const product=unit+toppingUnit+packUnit,price=num('salePrice'),profit=price-product,margin=price>0?profit/price*100:null;
+ $('unitTortilla').textContent=qty?money(unit):'—';
+ $('unitProduct').textContent=finished?money(product):'—';
+ $('saleDisplay').textContent=money(price);
+ $('profit').textContent=finished&&price?money(profit):'—';
+ $('margin').textContent=margin===null?'—':margin.toFixed(1)+'%';
+ $('tortillaBreakdown').innerHTML=rows([['Insumos de mezcla',base],['Mantequilla',butter],['Electricidad',e.cost],['Costo total del lote',tortillaBatch],['Tortillas producidas',qty],['Costo unitario',unit]]);
+ $('productBreakdown').innerHTML=rows([['Tortilla base',unit],['Toppings por producto',toppingUnit],['Empaque y auxiliares por producto',packUnit],['Costo unitario final',product],['Productos terminados',finished]]);
+}
+function rows(a){return a.map((r,i)=>`<tr ${i===a.length-1?'class="totalrow"':''}><td>${r[0]}</td><td class="money">${typeof r[1]==='number'&&['Tortillas producidas','Productos terminados'].includes(r[0])?r[1]:money(r[1])}</td></tr>`).join('')}
+const inputs=['butterCost','crepeQty','crepeW','crepeMin','blenderW','blenderMin','rate','philCost','jamCost','strawCost','plateCost','packCost','gloveCost','otherCost','finishedQty','salePrice'];
+function save(){const data={counts,manual,values:{}};inputs.forEach(id=>data.values[id]=$(id).value);data.base={};document.querySelectorAll('.base-input').forEach(i=>data.base[i.dataset.id]=i.value);try{localStorage.setItem('crepalab-v1',JSON.stringify(data))}catch(e){}}
+function load(){try{const d=JSON.parse(localStorage.getItem('crepalab-v1')||'null');if(!d)return;counts=d.counts||counts;manual=d.manual||0;inputs.forEach(id=>{if(d.values&&d.values[id]!==undefined)$(id).value=d.values[id]});if(d.base)document.querySelectorAll('.base-input').forEach(i=>{if(d.base[i.dataset.id]!==undefined)i.value=d.base[i.dataset.id]})}catch(e){}}
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab,.panel').forEach(x=>x.classList.remove('active'));b.classList.add('active');$(b.dataset.tab).classList.add('active');calc()});
+$('manualAdd').onclick=()=>{manual++;save();renderTeams();calc()};
+$('resetCounts').onclick=()=>{if(confirm('¿Reiniciar el conteo de los cuatro equipos?')){counts=[0,0,0,0];manual=0;save();renderTeams();calc()}};
+inputs.forEach(id=>$(id).addEventListener('input',()=>{save();calc()}));
+$('exportCsv').onclick=()=>{const q=totalTortillas(),e=energy(),base=baseTotal(),tBatch=base+num('butterCost')+e.cost,unit=q?tBatch/q:0,f=num('finishedQty'),top=num('philCost')+num('jamCost')+num('strawCost'),pack=num('plateCost')+num('packCost')+num('gloveCost')+num('otherCost'),prod=unit+(f?top/f:0)+(f?pack/f:0);
+const data=[['Concepto','Valor'],['Equipo 1',counts[0]],['Equipo 2',counts[1]],['Equipo 3',counts[2]],['Equipo 4',counts[3]],['Tortillas totales',q],['Insumos mezcla',base],['Mantequilla',num('butterCost')],['Consumo electrico kWh',e.kwh],['Costo electricidad',e.cost],['Costo por tortilla',unit],['Toppings total',top],['Empaque y auxiliares total',pack],['Productos terminados',f],['Costo por producto final',prod],['Precio de venta',num('salePrice')]];
+const csv='\uFEFF'+data.map(r=>r.map(v=>'"'+String(v).replaceAll('"','""')+'"').join(',')).join('\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'}));a.download='reporte-crepalab.csv';a.click();URL.revokeObjectURL(a.href)};
+$('print').onclick=()=>window.print();
+renderBase();load();renderTeams();calc();
+</script>
+</body></html>
